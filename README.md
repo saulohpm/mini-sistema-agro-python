@@ -47,5 +47,3 @@ O sistema permite cadastrar, visualizar, editar e analisar plantações, incluin
 
 ```bash
 python main.py
-
-python main.py
