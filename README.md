@@ -12,6 +12,8 @@ O sistema permite cadastrar, visualizar, editar e analisar plantações, incluin
 - ✏️ Edição de dados cadastrados
 - 👀 Visualização das plantações registradas
 - 📅 Cálculo automático do tempo restante até a colheita
+- 🗑️ Excluir plantações dentro do sistema
+- 👤 Cadastro e manipulação de nome de usuário
 - 🖥️ Interface simples via terminal (menu interativo)
 
 ---
@@ -24,13 +26,13 @@ O sistema permite cadastrar, visualizar, editar e analisar plantações, incluin
 - Manipulação de datas com `datetime`
 - Entrada e saída de dados no terminal
 - Validação de dados
+- Salvamento e carregamento de dados
 
 ---
 
 ## 🛠️ Tecnologias utilizadas
 
 - Python 3
-- Biblioteca padrão `datetime`
 
 *(Não utiliza bibliotecas externas)*
 
@@ -44,4 +46,6 @@ O sistema permite cadastrar, visualizar, editar e analisar plantações, incluin
 4. Execute:
 
 ```bash
+python main.py
+
 python main.py
