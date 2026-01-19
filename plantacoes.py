@@ -1,9 +1,10 @@
 from datetime import datetime
 import utils
+import usuario
 
 plantacoes = []
 
-def menu(plantacoes):
+def menu(plantacoes, usuarios):
 
     while True:
         
@@ -13,10 +14,13 @@ def menu(plantacoes):
             "Cadastrar Plantação",
             "Editar Plantação",
             "Visualizar Plantações Cadastradas",
+            "Apagar Plantação",
+            "Trocar Nome de Usuário",
             "Sair"
         ]
 
         utils.titulo("🌱 SISTEMA DE MANUSEIO DE PLANTAÇÕES 🌱")
+        print(f"Bem Vindo(a) {usuarios[0]['nome']}, o que quer fazer hoje?\n")
 
         for i, opcao in enumerate(opcoes):
             print(f"{i}. {opcao}")
@@ -24,7 +28,7 @@ def menu(plantacoes):
         try:
             escolha = int(input("\nSelecione a opção desejada do menu: "))
 
-            if escolha == 3:
+            if escolha == 5:
                 utils.barrinha()
                 print(f"{'Programa Encerrado!':^50}")
                 utils.barrinha()
@@ -38,6 +42,13 @@ def menu(plantacoes):
 
             elif escolha == 2:
                 visualizar(plantacoes)
+            
+            elif escolha == 3:
+                apagar(plantacoes)
+
+            elif escolha == 4:
+                usuario.apagarusuario(usuarios)
+                usuario.cadastrodeusuario(usuarios)
 
             else:
                 print("❌ ERRO: Opção inválida!")
@@ -85,10 +96,8 @@ def visualizar(lista):
 
     utils.limpar_tela()
 
-    utils.barrinha()
-
     if not lista:
-        print("⚠️ Nenhuma plantação cadastrada.")
+        print("⚠️  Nenhuma plantação cadastrada.")
         utils.pausa_pressione()
         return
 
@@ -132,7 +141,7 @@ def editar(lista):
     utils.barrinha()
 
     if not lista:
-        print("Nenhuma plantação cadastrada.")
+        print("⚠️  Nenhuma plantação cadastrada.")
         utils.pausa_pressione()
         return
 
@@ -155,7 +164,7 @@ def editar(lista):
 
     plantacao = lista[escolha]
 
-    utils.titulo(f"Editando {plantacao['nome']}")
+    utils.titulo(f"Editando: {plantacao['nome']}")
 
     # Campos que o usuário vê
     campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"]
@@ -199,5 +208,35 @@ def editar(lista):
 
     utils.pausa_tempo()
 
-def apagar():
-    pass
+def apagar(lista):
+
+    utils.limpar_tela()
+
+    utils.barrinha()
+
+    if not lista:
+        print("⚠️ Nenhuma plantação cadastrada.")
+        utils.pausa_pressione()
+        return
+
+    for i, plantacao in enumerate(lista):
+        print(f"{i}. {plantacao['nome']}")
+
+    try:
+        escolha = int(input("\nEscolha uma plantação para apagar: "))
+        if 0 <= escolha < len(lista):
+            confirmar = input(f"Tem certeza que deseja apagar {lista[escolha]['nome']}? (s/n) ").lower()
+            if confirmar != 's':
+                return
+            lista.pop(escolha)
+            utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
+            utils.barrinha()
+            print("Plantação deletada com sucesso! ✅")
+            utils.barrinha()
+            utils.pausa_tempo()
+        else:
+            print("❌ ERRO: Opção inválida!")
+            utils.pausa_pressione()
+    except ValueError:
+        print("❌ ERRO: Digite apenas números!")
+        utils.pausa_pressione()
