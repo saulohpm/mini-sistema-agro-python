@@ -36,6 +36,12 @@ def titulo(string):
     print(f"{'=' * 50:^50}")
 
 
+def subtitulo(string):
+    print(f"{'-' * 50:^50}")
+    print(f"{string:^50}")
+    print(f"{'-' * 50:^50}")
+
+
 def barrinha():
     print(f"{'-' * 50:^50}")
 
