@@ -1,49 +1,82 @@
 # 🌱 Mini Sistema de Manuseio de Plantações
 
-Este projeto é um **mini sistema em Python**, executado no terminal, criado com fins **educacionais** para praticar lógica de programação, estruturas de dados, funções e manipulação de datas.
+Sistema desenvolvido em Python, executado no terminal (CLI), com objetivo educacional, voltado ao aprendizado de lógica de programação, organização de código, manipulação de datas e persistência de dados.
 
-O sistema permite cadastrar, visualizar, editar e analisar plantações, incluindo o cálculo automático de dias restantes para a colheita.
-
----
-
-## 🚜 Funcionalidades
-
-- 📌 Cadastro de plantações
-- ✏️ Edição de dados cadastrados
-- 👀 Visualização das plantações registradas
-- 📅 Cálculo automático do tempo restante até a colheita
-- 🗑️ Excluir plantações dentro do sistema
-- 👤 Cadastro e manipulação de nome de usuário
-- 🖥️ Interface simples via terminal (menu interativo)
+O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de plantio e colheita, status da produção e geração de relatórios estatísticos simples.
 
 ---
 
-## 🧠 Conceitos praticados
+## 📌 Funcionalidades
 
-- Listas e estruturas de dados
-- Funções e modularização
-- Tratamento de erros (`try/except`)
-- Manipulação de datas com `datetime`
+- Cadastro, edição, visualização e remoção de plantações
+- Cadastro e alteração do nome do usuário
+- Cálculo automático do tempo restante até a colheita
+- Classificação do status da colheita:
+  - Agendada
+  - Em andamento
+  - Concluída
+- Geração de relatórios e estatísticas gerais
+- Persistência dos dados em arquivo JSON
+- Interface interativa via menu no terminal
+
+---
+
+## 🧠 Conceitos Trabalhados
+
+- Estruturas de dados (list, dict)
+- Modularização e organização do código
+- Funções e reutilização
+- Tratamento de exceções (try/except)
+- Manipulação e comparação de datas
+- Regras de negócio baseadas em datas
 - Entrada e saída de dados no terminal
-- Validação de dados
-- Salvamento e carregamento de dados
+- Persistência de dados em JSON
 
 ---
 
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Bibliotecas Utilizadas
 
-- Python 3
+- datetime — manipulação e cálculo de datas
+- json — leitura e escrita de arquivos JSON
+- os — controle do terminal (limpeza de tela)
 
-*(Não utiliza bibliotecas externas)*
+O projeto não utiliza bibliotecas externas.
 
 ---
 
-## ▶️ Como executar o projeto
+## ▶️ Como Executar
 
-1. Certifique-se de ter o **Python 3** instalado.
-2. Clone o repositório ou baixe o arquivo.
-3. No terminal, navegue até a pasta do projeto.
-4. Execute:
+Pré-requisitos:
+- Python 3 instalado
+
+Execução:
+1. Clone o repositório ou baixe os arquivos
+2. Acesse a pasta raiz do projeto pelo terminal
+3. Execute o comando:
+```bash
+   python main.py
+```
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```bash
-python main.py
+├── src/
+│   ├── main.py
+│   ├── utils.py
+│   └── usuario.py
+├── data/
+│   └── plantacoes.json
+│   └── usuarios.json
+└── README.md
+```
+
+
+---
+
+## 📌 Observações
+
+- Sistema offline
+- Dados armazenados localmente
+- Projeto com finalidade educacional
