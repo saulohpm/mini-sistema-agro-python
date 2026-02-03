@@ -1,0 +1,92 @@
+[
+    {
+        "nome": "Safra Milho Verão",
+        "semente": "Milho",
+        "plantio": "15/11/2025",
+        "colheita": "20/03/2026"
+    },
+    {
+        "nome": "Feijão Carioca",
+        "semente": "Feijão",
+        "plantio": "10/01/2026",
+        "colheita": "25/03/2026"
+    },
+    {
+        "nome": "Soja Safra Principal",
+        "semente": "Soja",
+        "plantio": "05/10/2025",
+        "colheita": "15/02/2026"
+    },
+    {
+        "nome": "Arroz Irrigado",
+        "semente": "Arroz",
+        "plantio": "01/09/2025",
+        "colheita": "10/01/2026"
+    },
+    {
+        "nome": "Hortaliças Folhosas",
+        "semente": "Alface",
+        "plantio": "05/02/2026",
+        "colheita": "05/03/2026"
+    },
+    {
+        "nome": "Milho Safra Inverno",
+        "semente": "Milho",
+        "plantio": "20/01/2026",
+        "colheita": "30/06/2026"
+    },
+    {
+        "nome": "Soja Safrinha",
+        "semente": "Soja",
+        "plantio": "15/02/2026",
+        "colheita": "20/07/2026"
+    },
+    {
+        "nome": "Trigo de Inverno",
+        "semente": "Trigo",
+        "plantio": "10/04/2026",
+        "colheita": "15/09/2026"
+    },
+    {
+        "nome": "Milho Safra Verão 2026/2027",
+        "semente": "Milho",
+        "plantio": "05/09/2026",
+        "colheita": "10/02/2027"
+    },
+    {
+        "nome": "Feijão Safra Seca",
+        "semente": "Feijão",
+        "plantio": "01/05/2026",
+        "colheita": "05/08/2026"
+    },
+    {
+        "nome": "Arroz de Sequeiro",
+        "semente": "Arroz",
+        "plantio": "15/10/2026",
+        "colheita": "20/02/2027"
+    },
+    {
+        "nome": "Sorgo Granífero",
+        "semente": "Sorgo",
+        "plantio": "01/06/2026",
+        "colheita": "10/10/2026"
+    },
+    {
+        "nome": "Cevada de Inverno",
+        "semente": "Cevada",
+        "plantio": "20/04/2026",
+        "colheita": "25/08/2026"
+    },
+    {
+        "nome": "Girassol Safra Principal",
+        "semente": "Girassol",
+        "plantio": "01/07/2026",
+        "colheita": "15/11/2026"
+    },
+    {
+        "nome": "Aveia Preta",
+        "semente": "Aveia",
+        "plantio": "05/05/2026",
+        "colheita": "30/09/2026"
+    }
+]
