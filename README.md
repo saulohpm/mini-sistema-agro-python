@@ -12,9 +12,7 @@ O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de pla
 - Cadastro e alteração do nome do usuário
 - Cálculo automático do tempo restante até a colheita
 - Classificação do status da colheita:
-  - Agendada
-  - Em andamento
-  - Concluída
+  - Agendada, Em andamento e Concluída
 - Geração de relatórios e estatísticas gerais
 - Persistência dos dados em arquivo JSON
 - Interface interativa via menu no terminal
@@ -34,13 +32,13 @@ O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de pla
 
 ---
 
-## 🛠️ Bibliotecas Utilizadas
+## 📚 Bibliotecas Utilizadas
 
 - datetime — manipulação e cálculo de datas
 - json — leitura e escrita de arquivos JSON
 - os — controle do terminal (limpeza de tela)
 
-O projeto não utiliza bibliotecas externas.
+O projeto não utiliza bibliotecas externas, apenas bibliotecas padrão do Python.
 
 ---
 
@@ -66,10 +64,13 @@ Execução:
 │   ├── main.py
 │   ├── utils.py
 │   └── usuario.py
+│   └── plantacoes.py
 ├── data/
 │   └── plantacoes.json
 │   └── usuarios.json
-└── README.md
+│   └── sementes.json
+├── README.md
+└── main.py
 ```
 
 
@@ -80,3 +81,4 @@ Execução:
 - Sistema offline
 - Dados armazenados localmente
 - Projeto com finalidade educacional
+- Estrutura pensada para fácil manutenção e evolução
