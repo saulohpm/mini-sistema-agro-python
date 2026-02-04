@@ -13,7 +13,7 @@ O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de pla
 - Cálculo automático do tempo restante até a colheita
 - Classificação do status da colheita:
   - Agendada, Em andamento e Concluída
-- Geração de relatórios e estatísticas gerais
+- Análise de proximas colheitas
 - Persistência dos dados em arquivo JSON
 - Interface interativa via menu no terminal
 
@@ -82,3 +82,4 @@ Execução:
 - Dados armazenados localmente
 - Projeto com finalidade educacional
 - Estrutura pensada para fácil manutenção e evolução
+
