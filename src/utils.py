@@ -1,20 +1,27 @@
 from datetime import datetime, date, time, timedelta
+from pathlib import Path
 import json
 import time
 import os
-from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-ARQUIVO = BASE_DIR.parent / "data" / "plantacoes.json"
+PLANTACOES = BASE_DIR.parent / "data" / "plantacoes.json"
+SEMENTES = BASE_DIR.parent / "data" / "sementes.json"
 
-def salvar_dados(lista):
-    with open(ARQUIVO, "w", encoding="utf-8") as f:
+def salvar_dados(lista, arquivo=None):
+    if arquivo is None:
+        arquivo = PLANTACOES
+
+    with open(arquivo, "w", encoding="utf-8") as f:
         json.dump(lista, f, ensure_ascii=False, indent=4)
 
 
-def carregar_dados():
-    if os.path.exists(ARQUIVO):
-        with open(ARQUIVO, "r", encoding="utf-8") as f:
+def carregar_dados(arquivo=None):
+    if arquivo is None:
+        arquivo = PLANTACOES
+
+    if os.path.exists(arquivo):
+        with open(arquivo, "r", encoding="utf-8") as f:
             return json.load(f)
     return []
 
