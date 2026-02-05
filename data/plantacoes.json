@@ -1,0 +1,62 @@
+[
+    {
+        "nome": "Milharal Primavera",
+        "semente": "Milho",
+        "plantio": "15/10/2025",
+        "colheita": "15/02/2026"
+    },
+    {
+        "nome": "Soja Campo Sul",
+        "semente": "Soja",
+        "plantio": "01/09/2025",
+        "colheita": "10/01/2026"
+    },
+    {
+        "nome": "Feijão Roxo",
+        "semente": "Feijão",
+        "plantio": "20/11/2025",
+        "colheita": "25/03/2026"
+    },
+    {
+        "nome": "Trigo Campos Frios",
+        "semente": "Trigo",
+        "plantio": "05/06/2025",
+        "colheita": "15/09/2025"
+    },
+    {
+        "nome": "Cafeeiro Alto",
+        "semente": "Café",
+        "plantio": "01/09/2025",
+        "colheita": "01/09/2026"
+    },
+    {
+        "nome": "Algodão Branco",
+        "semente": "Algodão",
+        "plantio": "20/10/2025",
+        "colheita": "20/02/2026"
+    },
+    {
+        "nome": "Melancia Suculenta",
+        "semente": "Melancia",
+        "plantio": "01/11/2025",
+        "colheita": "01/03/2026"
+    },
+    {
+        "nome": "Mandioca Raiz Forte",
+        "semente": "Mandioca",
+        "plantio": "01/12/2025",
+        "colheita": "01/06/2026"
+    },
+    {
+        "nome": "Batata Roxa",
+        "semente": "Batata",
+        "plantio": "01/06/2025",
+        "colheita": "01/09/2025"
+    },
+    {
+        "nome": "Tomate Carmem",
+        "semente": "Tomate",
+        "plantio": "01/10/2025",
+        "colheita": "01/01/2026"
+    }
+]
