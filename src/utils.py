@@ -72,6 +72,23 @@ def validar_data(data_str):
         return False
 
 
+def verificar_data(data_str):
+    if not validar_data(data_str):
+        print("❌ ERRO: Data inválida!")
+        utils.pausa_pressione()
+        return
+
+
+def validar_lista(lista):
+    '''
+    Verifica se a lista está vazia
+    '''
+    if not lista:
+        print("⚠️  Nenhuma plantação cadastrada.")
+        utils.pausa_pressione()
+        return
+
+
 def mesatual(argumento=True):
     '''
     True: Retorna uma string com nome do mês, exemplo: Março

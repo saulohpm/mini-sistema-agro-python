@@ -35,7 +35,7 @@ def menu(plantacoes, usuarios):
         try:
             escolha = int(input("\nSelecione a opção desejada do menu: "))
 
-            if opcoes[escolha] == opcoes[-1]:
+            if escolha == len(opcoes):
                 utils.subtitulo(f"{'Programa Encerrado!':^{utils.largura_tela}}")
                 break
 

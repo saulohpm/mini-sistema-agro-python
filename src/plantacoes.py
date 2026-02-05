@@ -47,48 +47,32 @@ def cadastrar(lista):
     nome = input("Digite o nome da plantação: ")
 
     sementes = utils.carregar_dados(utils.SEMENTES)
-
     mostrar_sementes(sementes)
-
     semente = int(input("\nDigite a semente utilizada: "))
 
     data_plantio = utils.converter_data(input("Digite a data de plantio (dd/mm/aaaa): "))
-
-    if not utils.validar_data(data_plantio):
-        print("❌ ERRO: Data inválida!")
-        utils.pausa_pressione()
-        return
+    utils.verificar_data(data_plantio)
 
     data_colheita = utils.converter_data(input("Digite a data de colheita (dd/mm/aaaa): "))
-
-    if not utils.validar_data(data_colheita):
-        print("❌ ERRO: Data inválida!")
-        utils.pausa_pressione()
-        return
+    utils.verificar_data(data_colheita)
 
     plantacao = {"nome": nome, "semente": sementes[semente], "plantio": data_plantio, "colheita": data_colheita}
 
     lista.append(plantacao)
+
     utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-
-    utils.barrinha()
-    print("Plantação cadastrada com sucesso! ✅")
-    utils.barrinha()
-
+    utils.subtitulo("Plantação cadastrada com sucesso! ✅") # Subtitulo usado como suporte
     utils.pausa_tempo()
 
 
 def editar(lista):
 
+    # Primeira Tela: Mostras as Plantações
     utils.limpar_tela()
     utils.subtitulo("Edição de Plantação")
 
-    if not lista:
-        print("⚠️  Nenhuma plantação cadastrada.")
-        utils.pausa_pressione()
-        return
+    utils.validar_lista(lista)
 
-    # Mostra as plantações
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
 
@@ -103,24 +87,21 @@ def editar(lista):
         utils.pausa_pressione()
         return
 
+    # Segunda Tela: Edição da Plantação
     utils.limpar_tela()
+    utils.titulo(f"Editando: {plantacao['nome']}")
 
     plantacao = lista[escolha]
 
-    utils.titulo(f"Editando: {plantacao['nome']}")
-
-    # Campos que o usuário vê
-    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"]
-
-    # Campos reais do dicionário
-    mapa_campos = ["nome", "semente", "plantio", "colheita"]
+    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"] # Campos que o usuário vê
+    mapa_campos = ["nome", "semente", "plantio", "colheita"] # Campos reais do dicionário
 
     for i, campo in enumerate(campos):
         print(f"{i}. {campo}")
 
     try:
         campo_escolhido = int(input("\nQual campo deseja editar? "))
-        if campo_escolhido not in range(4):
+        if campo_escolhido not in range(len(campos)):
             print("❌ ERRO: Opção inválida!")
             utils.pausa_pressione()
             return
@@ -140,24 +121,15 @@ def editar(lista):
     else:
         novo_valor = input(f"Digite o novo valor para {campos[campo_escolhido]}: ")
 
-    # Se for data, valida
-    if campo_escolhido in [2, 3]:
+    if campo_escolhido in [2, 3]: # Se for data, valida
         novo_valor = utils.converter_data(novo_valor)
-        if not utils.validar_data(novo_valor):
-            print("❌ ERRO: Data inválida!")
-            utils.pausa_pressione()
-            return
+        utils.verificar_data(novo_valor)
 
-    # Final
     chave = mapa_campos[campo_escolhido]
     plantacao[chave] = novo_valor
 
     utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-
-    utils.barrinha()
-    print("Plantação atualizada com sucesso! ✅")
-    utils.barrinha()
-
+    utils.subtitulo("Plantação atualizada com sucesso! ✅") # Subtitulo usado como suporte
     utils.pausa_tempo()
 
 
@@ -165,11 +137,7 @@ def visualizar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Visualização de Plantações")
-
-    if not lista:
-        print("⚠️  Nenhuma plantação cadastrada.")
-        utils.pausa_pressione()
-        return
+    utils.validar_lista(lista)
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
@@ -301,11 +269,7 @@ def apagar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Apagar Plantação")
-
-    if not lista:
-        print("⚠️ Nenhuma plantação cadastrada.")
-        utils.pausa_pressione()
-        return
+    utils.validar_lista(lista)
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
@@ -318,9 +282,7 @@ def apagar(lista):
                 return
             lista.pop(escolha)
             utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-            utils.barrinha()
-            print("Plantação deletada com sucesso! ✅")
-            utils.barrinha()
+            utils.subtitulo("Plantação deletada com sucesso! ✅")
             utils.pausa_tempo()
         else:
             print("❌ ERRO: Opção inválida!")
