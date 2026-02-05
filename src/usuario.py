@@ -35,4 +35,3 @@ def cadastrodeusuario(usuarios):
 
 def apagarusuario(usuarios):
     usuarios.pop(0)
-    return
