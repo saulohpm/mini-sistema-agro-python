@@ -20,8 +20,8 @@ def chamadadefuncoes(escolha, plantacoes, usuarios):
 
 def mostrar_sementes(sementes, coluna=3):
     """
-    Este bloco é uma função auxiliar que explica a lógica usada para imprimir sementes
-    em colunas de 3 (editável), para que o usuário escolha corretamente.
+    Este bloco é uma função de suporte que explica a lógica usada para imprimir sementes
+    em colunas de 3 (editável) para que o usuário escolha corretamente.
     """
 
     print("\nEscolha uma das seguintes sementes: \n")
