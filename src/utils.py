@@ -9,6 +9,7 @@ PLANTACOES = BASE_DIR.parent / "data" / "plantacoes.json"
 SEMENTES = BASE_DIR.parent / "data" / "sementes.json"
 
 largura_tela = 100
+formato_data = "%d/%m/%Y"
 
 def salvar_dados(lista, arquivo=None):
     if arquivo is None:
@@ -66,7 +67,7 @@ def converter_data(data_str):
 
 def validar_data(data_str):
     try:
-        datetime.strptime(data_str, "%d/%m/%Y")
+        datetime.strptime(data_str, formato_data)
         return True
     except ValueError:
         print("❌ ERRO: Data inválida!")
@@ -76,13 +77,13 @@ def validar_data(data_str):
 
 def validar_lista(lista):
     '''
-    Verifica se a lista está vazia
+    Verifica se a lista está vazia (True: está | False: não está)
     '''
     if not lista:
         print("⚠️  Nenhuma plantação cadastrada.")
         pausa_pressione()
-        return False
-    return True
+        return True
+    return False
 
 
 def validar_inteiro(valor, lista=None):

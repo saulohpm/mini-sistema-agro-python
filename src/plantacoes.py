@@ -72,17 +72,18 @@ def editar(lista):
         print(f"{i}. {campo}")
 
     campo_escolhido = utils.validar_inteiro(input("\nQual campo deseja editar? "), campos)
+    if campo_escolhido is None: return
 
     if mapa_campos[campo_escolhido] == "semente":
         semente, sementes = auxiliares.mostrar_sementes()
         novo_valor = sementes[semente]
 
-    elif campo_escolhido in [2, 3]: # Se for data, valida
-        novo_valor = utils.converter_data(novo_valor)
-        utils.verificar_data(novo_valor)
-
     else:
         novo_valor = input(f"Digite o novo valor para {campos[campo_escolhido]}: ")
+
+    if campo_escolhido in [2, 3]: # Se for data, valida
+        novo_valor = utils.converter_data(novo_valor)
+        if not utils.validar_data(novo_valor): return
 
     chave = mapa_campos[campo_escolhido]
     plantacao[chave] = novo_valor
@@ -96,7 +97,7 @@ def visualizar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Visualização de Plantações")
-    utils.validar_lista(lista)
+    if not utils.validar_lista(lista): return
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
@@ -118,7 +119,7 @@ def analisar(lista, indice):
     print(f"Data de plantio: {plantacao['plantio']}")
     print(f"Data de colheita: {plantacao['colheita']}")
 
-    dias = (datetime.strptime(plantacao['colheita'], "%d/%m/%Y") - datetime.strptime(plantacao['plantio'], "%d/%m/%Y"))
+    dias = (datetime.strptime(plantacao['colheita'], utils.formato_data) - datetime.strptime(plantacao['plantio'], utils.formato_data))
 
     print(f"Faltam {dias.days} dias para a colheita!")
 
@@ -154,11 +155,11 @@ def relatorios_2(lista, escolha, opcoes):
         utils.barrinha()
         
         for plantacao in lista:
-            plantacao_analisada = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
+            plantacao_analisada = datetime.strptime(plantacao["colheita"], utils.formato_data)
             if plantacao_analisada.month == utils.mesatual(False):
-                print(f"\n- {plantacao["nome"]}")
-                print(f"Semente: {plantacao["semente"]}")
-                print(f"Colheita: {plantacao["colheita"]}")
+                print(f"\n- {plantacao['nome']}")
+                print(f"Semente: {plantacao['semente']}")
+                print(f"Colheita: {plantacao['colheita']}")
                 print("")
 
     # Status de Colheita
@@ -171,8 +172,8 @@ def relatorios_2(lista, escolha, opcoes):
         agendadas = []
 
         for plantacao in lista:
-            datadecolheita = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
-            datadeplantio = datetime.strptime(plantacao["plantio"], "%d/%m/%Y")
+            datadecolheita = datetime.strptime(plantacao["colheita"], utils.formato_data)
+            datadeplantio = datetime.strptime(plantacao["plantio"], utils.formato_data)
             if hoje >= datadecolheita:
                 concluidas.append(plantacao)
             elif datadeplantio < hoje < datadecolheita:
@@ -184,15 +185,15 @@ def relatorios_2(lista, escolha, opcoes):
         
         print(f"🟢 Concluídas ({len(concluidas)})")
         for plantacao in concluidas:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
+            print(f"- {plantacao['nome']} | Colheita: {plantacao['colheita']}")
 
         print(f"\n🟡 Em andamento ({len(emandamento)})")
         for plantacao in emandamento:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
+            print(f"- {plantacao['nome']} | Colheita: {plantacao['colheita']}")
 
-        print(f"\n🔵 Agendadas ({len(agendadas)})")
+        print(f"\n🔵 Plantios Agendados ({len(agendadas)})")
         for plantacao in agendadas:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
+            print(f"- {plantacao['nome']} | Colheita: {plantacao['colheita']}")
 
     # Análise de Colheita
     elif escolha == 2:
@@ -206,7 +207,7 @@ def relatorios_2(lista, escolha, opcoes):
             datadecolheita = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
             diasatecolheita = (datadecolheita - hoje).days
             if 0 <= diasatecolheita <= 7:
-                print(f"- {plantacao["nome"]} | {plantacao["semente"]} -> {diasatecolheita} dias")
+                print(f"- {plantacao['nome']} | {plantacao['semente']} -> {diasatecolheita} dias")
                 cont += 1
         
         if cont == 0: print(f"\n{'NÃO Há COLHEITAS NOS PRÓXIMOS 7 DIAS':^{utils.largura_tela}}")
@@ -218,7 +219,7 @@ def apagar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Apagar Plantação")
-    utils.validar_lista(lista)
+    if not utils.validar_lista(lista): return
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
