@@ -82,4 +82,4 @@ Execução:
 - Dados armazenados localmente
 - Projeto com finalidade educacional
 - Estrutura pensada para fácil manutenção e evolução do projeto
-- Objetivo Final, Projeto CLI usando P.O.O
+- Objetivo Final, Projeto CLI usando Programação Orientada a Objetos
