@@ -35,7 +35,7 @@ def menu(plantacoes, usuarios):
         try:
             escolha = int(input("\nSelecione a opção desejada do menu: "))
 
-            if escolha == len(opcoes):
+            if escolha == len(opcoes) - 1:
                 utils.subtitulo(f"{'Programa Encerrado!':^{utils.largura_tela}}")
                 break
 
@@ -43,5 +43,5 @@ def menu(plantacoes, usuarios):
                 chamadadefuncoes(escolha, plantacoes, usuarios)
 
         except ValueError:
-            print("❌ ERRO: Digite apenas números ou uma entrada válida!")
+            print("❌ ERRO: Digite uma entrada válida!")
             utils.pausa_pressione()

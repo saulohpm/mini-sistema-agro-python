@@ -23,9 +23,5 @@ def mostrar_sementes(coluna=3):
     if printar:
         print(printar.rstrip(" | "))
 
-    semente = int(input("\nDigite a semente a ser utilizada: "))
-
-    if semente not in range(len(sementes)):
-        return ValueError
-
+    semente = utils.validar_inteiro(input("\nDigite a semente a ser utilizada: "), sementes)
     return semente, sementes

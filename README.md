@@ -2,7 +2,7 @@
 
 Sistema desenvolvido em Python, executado no terminal (CLI), com objetivo educacional, voltado ao aprendizado de lógica de programação, organização de código, manipulação de datas e persistência de dados.
 
-O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de plantio e colheita, status da produção e geração de relatórios estatísticos simples.
+O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de plantio e colheita, status da produção e geração de relatórios simples.
 
 ---
 
@@ -81,4 +81,5 @@ Execução:
 - Sistema offline
 - Dados armazenados localmente
 - Projeto com finalidade educacional
-- Estrutura pensada para fácil manutenção e evolução
+- Estrutura pensada para fácil manutenção e evolução do projeto
+- Objetivo Final, Projeto CLI usando P.O.O

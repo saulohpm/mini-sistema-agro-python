@@ -69,14 +69,9 @@ def validar_data(data_str):
         datetime.strptime(data_str, "%d/%m/%Y")
         return True
     except ValueError:
-        return False
-
-
-def verificar_data(data_str):
-    if not validar_data(data_str):
         print("❌ ERRO: Data inválida!")
-        utils.pausa_pressione()
-        return
+        pausa_pressione()
+        return False
 
 
 def validar_lista(lista):
@@ -85,8 +80,27 @@ def validar_lista(lista):
     '''
     if not lista:
         print("⚠️  Nenhuma plantação cadastrada.")
-        utils.pausa_pressione()
-        return
+        pausa_pressione()
+        return False
+    return True
+
+
+def validar_inteiro(valor, lista=None):
+    '''
+    Verifica se é inteiro e se está em um intervalo (range(len(lista))
+    Retorna None caso contrário e o valor caso verdadeiro
+    '''
+    try:
+        valor = int(valor)
+        if lista is not None and valor not in range(len(lista)):
+            print("❌ ERRO: Fora do intervalo")
+            pausa_pressione()
+            return None
+        return valor
+    except ValueError:
+        print("❌ ERRO: Entrada inválida")
+        pausa_pressione()
+        return None
 
 
 def mesatual(argumento=True):
