@@ -58,5 +58,11 @@
         "semente": "Tomate",
         "plantio": "01/10/2025",
         "colheita": "01/01/2026"
+    },
+    {
+        "nome": "Plantação Teste",
+        "semente": "Castanha-do-pará",
+        "plantio": "19/10/2025",
+        "colheita": "06/02/2026"
     }
 ]

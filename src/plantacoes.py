@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 import src.utils as utils
 import src.usuario as usuario
+import src.auxiliares as auxiliares
 
-
+# Chama as Funções
 def chamadadefuncoes(escolha, plantacoes, usuarios):
 
         if escolha in range(5):
@@ -18,27 +19,7 @@ def chamadadefuncoes(escolha, plantacoes, usuarios):
             utils.pausa_pressione()
 
 
-def mostrar_sementes(sementes, coluna=3):
-    """
-    Este bloco é uma função de suporte que explica a lógica usada para imprimir sementes
-    em colunas de 3 (editável) para que o usuário escolha corretamente.
-    """
-
-    print("\nEscolha uma das seguintes sementes: \n")
-
-    printar = ""
-
-    for i in range(len(sementes)):
-        item = f"{i}. {sementes[i]}"
-        printar += f"{item:^25} | "
-        if (i + 1) % coluna == 0:
-            print(printar.rstrip(" | "))
-            printar = ""
-
-    if printar:
-        print(printar.rstrip(" | "))
-
-
+# Funções do Sistema
 def cadastrar(lista):
 
     utils.limpar_tela()
@@ -46,9 +27,7 @@ def cadastrar(lista):
 
     nome = input("Digite o nome da plantação: ")
 
-    sementes = utils.carregar_dados(utils.SEMENTES)
-    mostrar_sementes(sementes)
-    semente = int(input("\nDigite a semente utilizada: "))
+    semente, sementes = auxiliares.mostrar_sementes()
 
     data_plantio = utils.converter_data(input("Digite a data de plantio (dd/mm/aaaa): "))
     utils.verificar_data(data_plantio)
@@ -70,7 +49,6 @@ def editar(lista):
     # Primeira Tela: Mostras as Plantações
     utils.limpar_tela()
     utils.subtitulo("Edição de Plantação")
-
     utils.validar_lista(lista)
 
     for i, plantacao in enumerate(lista):
@@ -78,10 +56,12 @@ def editar(lista):
 
     try:
         escolha = int(input("\nEscolha a plantação para editar: "))
+
         if not (0 <= escolha < len(lista)):
             print("❌ ERRO: Opção inválida!")
             utils.pausa_pressione()
             return
+
     except ValueError:
         print("❌ ERRO: Digite apenas números!")
         utils.pausa_pressione()
@@ -101,23 +81,21 @@ def editar(lista):
 
     try:
         campo_escolhido = int(input("\nQual campo deseja editar? "))
+
         if campo_escolhido not in range(len(campos)):
             print("❌ ERRO: Opção inválida!")
             utils.pausa_pressione()
             return
+
     except ValueError:
         print("❌ ERRO: Digite apenas números!")
         utils.pausa_pressione()
         return
 
-    if campo_escolhido == 1:
+    if mapa_campos[campo_escolhido] == "semente":
 
-        sementes = utils.carregar_dados(utils.SEMENTES)
-
-        mostrar_sementes(sementes)
-
-        novo_valor = int(input(f"\nDigite o novo valor para {campos[campo_escolhido]}: "))
-
+        semente, sementes = auxiliares.mostrar_sementes()
+        novo_valor = sementes[semente]
     else:
         novo_valor = input(f"Digite o novo valor para {campos[campo_escolhido]}: ")
 
