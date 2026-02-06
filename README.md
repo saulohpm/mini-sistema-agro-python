@@ -61,13 +61,13 @@ Execução:
 
 ```bash
 ├── src/
-│   ├── main.py
 │   ├── utils.py
-│   └── usuario.py
-│   └── plantacoes.py
+│   ├── usuario.py
+│   ├── plantacoes.py
+│   └── auxiliares.py
 ├── data/
-│   └── plantacoes.json
-│   └── usuarios.json
+│   ├── plantacoes.json
+│   ├── usuarios.json
 │   └── sementes.json
 ├── README.md
 └── main.py
