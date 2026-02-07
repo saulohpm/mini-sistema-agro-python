@@ -57,7 +57,7 @@ def barrinha():
     print(f"{'-' * largura_tela}")
 
 
-def converter_data(data_str):
+def ajustar_data(data_str):
     if len(data_str) == 8:
         nova_data_str = data_str[:2] + "/" + data_str[2:4] + "/" + data_str[4:]
         return nova_data_str
@@ -77,7 +77,7 @@ def validar_data(data_str):
 
 def validar_lista(lista):
     '''
-    Verifica se a lista está vazia (True: está | False: não está)
+    Verifica se a lista está VAZIA (True: está | False: não está)
     '''
     if not lista:
         print("⚠️  Nenhuma plantação cadastrada.")
