@@ -1,21 +1,30 @@
 from datetime import datetime
 import src.utils as utils
 
-def mostrar_sementes(coluna=3):
-    """
-    Este bloco é uma função de suporte que tem os seguintes objetivos:
-    1) Explica a lógica usada para imprimir sementes em colunas de 3 (editável) para que o usuário escolha corretamente.
-    2) Declara uma variavel input, valida e depois retorna a variavel inputada e a lista sementes.
-    """
+def mostrar_plantas():
 
-    sementes = utils.carregar_dados(utils.SEMENTES)
+    plantas = utils.carregar_dados(utils.PLANTAS)
 
-    print("\nEscolha uma das seguintes sementes: \n")
+    print(f"\nTipos de Plantas disponíveis: \n")
+
+    for i, tipo in enumerate(plantas):
+        print(f"{i}. {tipo}")
+
+    tipo_de_planta = utils.validar_inteiro(input(f"\nDigite o tipo de planta que voçê quer acessar: "), plantas)
+    return tipo_de_planta, plantas
+
+
+def mostrar_plantas2(tipo_de_planta, plantas, coluna=3):
+
+    categorias = list(plantas.keys())
+    escolha_txt = categorias[tipo_de_planta]
+    selecoes = plantas[escolha_txt]
+
+    print(f"\nEscolha uma das seguintes {escolha_txt}: \n")
 
     printar = ""
-
-    for i in range(len(sementes)):
-        item = f"{i}. {sementes[i]}"
+    for i in range(len(selecoes)):
+        item = f"{i}. {selecoes[i]}"
         printar += f"{item:^25} | "
         if (i + 1) % coluna == 0:
             print(printar.rstrip(" | "))
@@ -24,8 +33,9 @@ def mostrar_sementes(coluna=3):
     if printar:
         print(printar.rstrip(" | "))
 
-    semente = utils.validar_inteiro(input("\nDigite a semente a ser utilizada: "), sementes)
-    return semente, sementes
+    indice = utils.validar_inteiro(input(f"\nDigite a {escolha_txt.lower()} a ser utilizada: "), selecoes)
+    
+    return selecoes[indice] if indice is not None else None
 
 def resumo_colheita_mensal(lista):
 
@@ -40,6 +50,7 @@ def resumo_colheita_mensal(lista):
             print(f"Semente: {plantacao['semente']}")
             print(f"Colheita: {plantacao['colheita']}")
             print("")
+
 
 def status_colheita(lista):
 
@@ -82,4 +93,4 @@ def analise_colheita(lista):
             print(f"- {plantacao['nome']} em {diasatecolheita} dias")
             cont += 1
         
-    if cont == 0: print(f"\n{'NÃO Há COLHEITAS NOS PRÓXIMOS 7 DIAS':^{utils.largura_tela}}")
+    if cont == 0: print(f"\n{'NÃO Há COLHEITAS NOS PRÓXIMOS 7 DIAS':^{utils.largura_tela}}\n")

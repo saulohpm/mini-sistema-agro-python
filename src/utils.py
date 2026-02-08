@@ -6,7 +6,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent
 PLANTACOES = BASE_DIR.parent / "data" / "plantacoes.json"
-SEMENTES = BASE_DIR.parent / "data" / "sementes.json"
+PLANTAS = BASE_DIR.parent / "data" / "plantas.json"
 
 largura_tela = 100
 formato_data = "%d/%m/%Y"

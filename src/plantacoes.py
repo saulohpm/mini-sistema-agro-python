@@ -22,14 +22,16 @@ def chamadadefuncoes(escolha, plantacoes, usuarios):
 
 # Funções do Sistema
 def cadastrar(lista):
-
     utils.limpar_tela()
     utils.subtitulo("Cadastro de Plantações")
 
     nome = input("Digite o nome da plantação: ")
 
-    semente, sementes = auxiliares.mostrar_sementes()
-    if semente is None: return
+    tipo_idx, dicionario_plantas = auxiliares.mostrar_plantas()
+    if tipo_idx is None: return
+
+    planta_nome = auxiliares.mostrar_plantas2(tipo_idx, dicionario_plantas)
+    if planta_nome is None: return
 
     data_plantio = utils.ajustar_data(input("Digite a data de plantio (dd/mm/aaaa): "))
     if not utils.validar_data(data_plantio): return
@@ -37,20 +39,22 @@ def cadastrar(lista):
     data_colheita = utils.ajustar_data(input("Digite a data de colheita (dd/mm/aaaa): "))
     if not utils.validar_data(data_colheita): return
 
-    utils.comparar_datas(data_colheita, data_plantio, "de Colheita", "de Plantio")
+    if utils.comparar_datas(data_colheita, data_plantio, "de colheita", "de plantio"): return
 
-    plantacao = {"nome": nome, "semente": sementes[semente], "plantio": data_plantio, "colheita": data_colheita}
+    plantacao = {
+        "nome": nome, 
+        "semente": planta_nome, 
+        "plantio": data_plantio, 
+        "colheita": data_colheita
+    }
 
     lista.append(plantacao)
-
-    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-    utils.subtitulo("Plantação cadastrada com sucesso! ✅") # Subtitulo usado como suporte
+    utils.salvar_dados(lista)
+    utils.subtitulo("Plantação cadastrada com sucesso! ✅")
     utils.pausa_tempo()
 
 
 def editar(lista):
-
-    # Primeira Tela: Mostras as Plantações
     utils.limpar_tela()
     utils.subtitulo("Edição de Plantação")
     if utils.validar_lista(lista): return
@@ -61,42 +65,45 @@ def editar(lista):
     escolha = utils.validar_inteiro(input("\nEscolha a plantação para editar: "), lista)
     if escolha is None: return
 
-    # Segunda Tela: Edição da Plantação
     plantacao = lista[escolha]
-
     utils.limpar_tela()
     utils.titulo(f"Editando: {plantacao['nome']}")
 
-    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"] # Campos que o usuário vê
-    mapa_campos = ["nome", "semente", "plantio", "colheita"] # Campos reais do dicionário
+    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"] # Usuário vê
+    mapa_campos = ["nome", "semente", "plantio", "colheita"] # Python trabalha
 
     for i, campo in enumerate(campos):
         print(f"{i}. {campo}")
 
     campo_escolhido = utils.validar_inteiro(input("\nQual campo deseja editar? "), campos)
     if campo_escolhido is None: return
+    
+    if campo_escolhido == 1:
+        tipo_idx, dados_plantas = auxiliares.mostrar_plantas()
+        if tipo_idx is None: return
 
-    if mapa_campos[campo_escolhido] == "semente":
-        semente, sementes = auxiliares.mostrar_sementes()
-        if semente is None: return
-        novo_valor = sementes[semente]
+        novo_valor = auxiliares.mostrar_plantas2(tipo_idx, dados_plantas)
+        if novo_valor is None: return
 
+    elif campo_escolhido in [2, 3]: # Se for Data (índices 2 ou 3)
+        novo_valor = utils.ajustar_data(input(f"Digite a nova {campos[campo_escolhido]}: "))
+        if not utils.validar_data(novo_valor): return
+        
+        if campo_escolhido == 2: # Editando Plantio
+            if utils.comparar_datas(plantacao['colheita'], novo_valor, "de Colheita", "de Plantio"): return
+        else: # Editando Colheita
+            if utils.comparar_datas(novo_valor, plantacao['plantio'], "de Colheita", "de Plantio"): return
+
+    # Se for Nome (índice 0) ou qualquer outro campo de texto
     else:
         novo_valor = input(f"Digite o novo valor para {campos[campo_escolhido]}: ")
 
-    if campo_escolhido in [2, 3]: # Se for data, valida
-        novo_valor = utils.ajustar_data(novo_valor)
-        if not utils.validar_data(novo_valor): return
-        if campo_escolhido == 2: 
-            if utils.comparar_datas(plantacao['colheita'], novo_valor, "de Colheita", "de Plantio"): return
-        else: 
-            if utils.comparar_datas(novo_valor, plantacao['plantio'], "de Colheita", "de Plantio"): return
-
+    # Atualiza o dicionário e salva
     chave = mapa_campos[campo_escolhido]
     plantacao[chave] = novo_valor
 
-    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-    utils.subtitulo("Plantação atualizada com sucesso! ✅") # Subtitulo usado como suporte
+    utils.salvar_dados(lista)
+    utils.subtitulo("Plantação atualizada com sucesso! ✅")
     utils.pausa_tempo()
 
 

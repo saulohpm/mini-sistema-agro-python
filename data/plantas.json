@@ -1,0 +1,39 @@
+{
+    "Sementes": [
+        "Açaí",
+        "Algodão",
+        "Amendoim",
+        "Arroz",
+        "Aveia",
+        "Batata",
+        "Cacau",
+        "Café",
+        "Cana-de-açúcar",
+        "Castanha-do-brasil",
+        "Cevada",
+        "Ervilha",
+        "Feijão",
+        "Girassol",
+        "Grão-de-bico",
+        "Lentilha",
+        "Mandioca",
+        "Milho",
+        "Pimenta",
+        "Soja",
+        "Sorgo",
+        "Tomate",
+        "Trigo"
+    ],
+    "Hortalicas": [
+        "Abóbora",
+        "Alface",
+        "Beterraba",
+        "Brócolis",
+        "Cenoura",
+        "Cebola",
+        "Espinafre",
+        "Pepino",
+        "Quiabo",
+        "Repolho"
+    ]
+}
