@@ -104,6 +104,23 @@ def validar_inteiro(valor, lista=None):
         return None
 
 
+def dias_para_colheita(data_de_colheita):
+    diferenca = (datetime.strptime(data_de_colheita, formato_data) - datetime.today()).days
+    return diferenca
+
+
+def comparar_datas(maior, menor, str_maior="maior", str_menor="menor"):
+    '''
+    Recebe duas datas em formato string (maior e menor)
+    Compara levando em consideração quem deve ser maior e menor
+    Retorna caso data maior <= data menor
+    '''
+
+    maior = datetime.strptime(maior, formato_data)
+    menor = datetime.strptime(menor, formato_data)
+
+    if maior <= menor: print(f"❌ A data {str_maior} deve ser posterior a data {str_menor}."); pausa_pressione(); return True
+
 def mesatual(argumento=True):
     '''
     True: Retorna uma string com nome do mês, exemplo: Março

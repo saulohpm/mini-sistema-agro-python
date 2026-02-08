@@ -58,10 +58,8 @@ def status_colheita(lista):
             emandamento.append(plantacao)
         else:
             agendadas.append(plantacao)
-        
-    print("")
-        
-    print(f"🟢 Concluídas ({len(concluidas)})")
+                
+    print(f"\n🟢 Concluídas ({len(concluidas)})")
     for plantacao in concluidas:
         print(f"- {plantacao['nome']} | Colheita: {plantacao['colheita']}")
 
@@ -75,16 +73,13 @@ def status_colheita(lista):
 
 def analise_colheita(lista):
     
-    print(f"{'| PROXIMAS COLHEITAS (PRÓXIMOS 7 DIAS) |':^{utils.largura_tela}}")
-
-    hoje = datetime.today()
+    print(f"{'| PROXIMAS COLHEITAS (PRÓXIMOS 7 DIAS) |':^{utils.largura_tela}}\n")
 
     cont = 0
     for plantacao in lista:
-        datadecolheita = datetime.strptime(plantacao["colheita"], utils.formato_data)
-        diasatecolheita = (datadecolheita - hoje).days
+        diasatecolheita = utils.dias_para_colheita(plantacao['colheita'])
         if 0 <= diasatecolheita <= 7:
-            print(f"- {plantacao['nome']} | {plantacao['semente']} -> {diasatecolheita} dias")
+            print(f"- {plantacao['nome']} em {diasatecolheita} dias")
             cont += 1
         
     if cont == 0: print(f"\n{'NÃO Há COLHEITAS NOS PRÓXIMOS 7 DIAS':^{utils.largura_tela}}")

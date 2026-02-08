@@ -37,6 +37,8 @@ def cadastrar(lista):
     data_colheita = utils.ajustar_data(input("Digite a data de colheita (dd/mm/aaaa): "))
     if not utils.validar_data(data_colheita): return
 
+    utils.comparar_datas(data_colheita, data_plantio, "de Colheita", "de Plantio")
+
     plantacao = {"nome": nome, "semente": sementes[semente], "plantio": data_plantio, "colheita": data_colheita}
 
     lista.append(plantacao)
@@ -85,6 +87,10 @@ def editar(lista):
     if campo_escolhido in [2, 3]: # Se for data, valida
         novo_valor = utils.ajustar_data(novo_valor)
         if not utils.validar_data(novo_valor): return
+        if campo_escolhido == 2: 
+            if utils.comparar_datas(plantacao['colheita'], novo_valor, "de Colheita", "de Plantio"): return
+        else: 
+            if utils.comparar_datas(novo_valor, plantacao['plantio'], "de Colheita", "de Plantio"): return
 
     chave = mapa_campos[campo_escolhido]
     plantacao[chave] = novo_valor
@@ -120,9 +126,10 @@ def analisar(lista, indice):
     print(f"Data de plantio: {plantacao['plantio']}")
     print(f"Data de colheita: {plantacao['colheita']}")
 
-    dias = (datetime.strptime(plantacao['colheita'], utils.formato_data) - datetime.strptime(plantacao['plantio'], utils.formato_data))
+    dias = utils.dias_para_colheita(plantacao['colheita'])
 
-    print(f"Faltam {dias.days} dias para a colheita!")
+    if dias >= 0: print(f"Faltam {dias} dias para a colheita!")
+    else: print(f"Se passaram {dias * -1} dias da colheita!")
 
     utils.pausa_pressione()
 
