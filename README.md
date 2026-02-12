@@ -8,21 +8,24 @@ O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de pla
 
 ## 📌 Funcionalidades
 
-- Cadastro, edição, visualização e remoção de plantações
-- Cadastro e alteração do nome do usuário
-- Cálculo automático do tempo restante até a colheita
-- Classificação do status da colheita:
-  - Agendada, Em andamento e Concluída
-- Análise de proximas colheitas
-- Persistência dos dados em arquivo JSON
-- Interface interativa via menu no terminal
+- Gestão de plantações:
+  - Cadastrar, editar, visualizar e remover plantações
+  - Cálculo automático do tempo até a colheita
+  - Classificação do status: Agendada, Em andamento, Concluída
+  - Análise das próximas colheitas
+- Gestão de usuários:
+  - Cadastro e alteração do nome do usuário
+- Persistência:
+  - Armazenamento em arquivo JSON
+- Interface:
+  - Menu interativo via terminal (CLI)
 
 ---
 
 ## 🧠 Conceitos Trabalhados
 
 - Estruturas de dados (list, dict)
-- Modularização e organização do código
+- Modularização e organização do código (módulos e funções)
 - Funções e reutilização
 - Tratamento de exceções (try/except)
 - Manipulação e comparação de datas
@@ -36,7 +39,7 @@ O projeto permite gerenciar plantações agrícolas, acompanhando o ciclo de pla
 
 - datetime — manipulação e cálculo de datas
 - json — leitura e escrita de arquivos JSON
-- os — controle do terminal (limpeza de tela)
+- os — limpeza da tela e manipulação de caminhos de arquivos
 
 O projeto não utiliza bibliotecas externas, apenas bibliotecas padrão do Python.
 
@@ -60,6 +63,8 @@ Execução:
 ## 📂 Estrutura do Projeto
 
 ```bash
+├── main.py
+├── README.md
 ├── src/
 │   ├── utils.py
 │   ├── usuario.py
@@ -69,8 +74,6 @@ Execução:
 │   ├── plantacoes.json
 │   ├── usuarios.json
 │   └── sementes.json
-├── README.md
-└── main.py
 ```
 
 
@@ -82,4 +85,4 @@ Execução:
 - Dados armazenados localmente
 - Projeto com finalidade educacional
 - Estrutura pensada para fácil manutenção e evolução do projeto
-- Objetivo Final, Projeto CLI usando P.O.O
+- Projeto desenvolvido em estilo procedural / funcional

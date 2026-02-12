@@ -6,12 +6,12 @@ import src.auxiliares as auxiliares
 # Chama as Funções
 def chamadadefuncoes(escolha, plantacoes, usuarios):
 
-    opcoesdefuncoes = [cadastrar, editar, visualizar, relatorios, apagar]
+    opcoesdefuncoes = [cadastrar, editar, visualizar, relatorios, apagar, apagartudo]
 
     if escolha in range(len(opcoesdefuncoes)):
         opcoesdefuncoes[escolha](plantacoes)
 
-    elif escolha == 5:
+    elif escolha == 6:
         usuario.apagarusuario(usuarios)
         usuario.cadastrodeusuario(usuarios)
 
@@ -77,7 +77,9 @@ def editar(lista):
 
     campo_escolhido = utils.validar_inteiro(input("\nQual campo deseja editar? "), campos)
     if campo_escolhido is None: return
-    
+
+    utils.limpar_tela()
+
     if campo_escolhido == 1:
         tipo_idx, dados_plantas = auxiliares.mostrar_plantas()
         if tipo_idx is None: return
@@ -196,4 +198,23 @@ def apagar(lista):
 
     utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
     utils.subtitulo("Plantação deletada com sucesso! ✅")
+    utils.pausa_tempo()
+
+
+def apagartudo(lista):
+
+    utils.limpar_tela()
+    utils.subtitulo("Apagar todas as plantaçôes")
+    if utils.validar_lista(lista): return
+
+    confirmar = input(f"TEM CERTEZA QUE DESEJA APAGAR TODAS AS PLANTAÇÕES? (SIM / NÃO)").lower()
+    if confirmar != 'sim': return
+
+    segundaconfirmacao = input(f"\nVOCÊ ESTÁ DELETANDO TODAS AS PLANTAÇÕES! DESEJA CONTINUAR? (SIM / NÃO)").lower()
+    if segundaconfirmacao != 'sim': return
+
+    lista = []
+
+    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
+    utils.subtitulo("Todas as plantaçôes foram deletadas! ⚠️")
     utils.pausa_tempo()

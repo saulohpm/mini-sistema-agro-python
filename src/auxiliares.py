@@ -16,6 +16,7 @@ def mostrar_plantas():
 
 def mostrar_plantas2(tipo_de_planta, plantas, coluna=3):
 
+    utils.limpar_tela()
     categorias = list(plantas.keys())
     escolha_txt = categorias[tipo_de_planta]
     selecoes = plantas[escolha_txt]

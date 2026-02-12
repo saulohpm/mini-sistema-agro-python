@@ -2,7 +2,7 @@ from src.plantacoes import chamadadefuncoes
 import src.utils as utils
 import src.usuario as usuario
 
-def iniciar_sistema():
+def iniciar():
     usuarios = usuario.carregar_usuarios()
     usuario.cadastrodeusuario(usuarios)
 
@@ -22,6 +22,7 @@ def menu(plantacoes, usuarios):
             "Visualizar Plantações Cadastradas",
             "Relatórios de Plantações",
             "Apagar Plantação",
+            "Apagar Todas as Plantações",
             "Trocar Nome de Usuário",
             "Sair"
         ]
