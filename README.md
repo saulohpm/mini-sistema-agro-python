@@ -5,7 +5,7 @@ Sistema CLI em Python para gestão de plantações agrícolas — controle de ci
 > Projeto desenvolvido com fins de estudo, aplicando lógica de programação, modularização, manipulação de datas e persistência de dados usando apenas a biblioteca padrão do Python.
 
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat&logo)
-![License](https://img.shields.io/badge/License-MIT-blue)
+![Versão](https://img.shields.io/badge/Versão-4.1-orange)
 ![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 ---
 
@@ -103,22 +103,9 @@ python main.py
 
 ---
 
-## 🚀 Possíveis Evoluções
-
-- [ ] Cobertura de testes automatizados (`unittest`/`pytest`)
-- [ ] Migração da persistência para banco de dados (SQLite)
-- [ ] Interface web (Flask/Django) sobre a mesma lógica de negócio
-
----
 
 ## 📝 Observações
 
 - Sistema 100% offline, com dados armazenados localmente
 - Projeto com finalidade educacional
 - Estrutura pensada para facilitar manutenção e evolução
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
