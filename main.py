@@ -1,4 +1,4 @@
-from src.sistema import iniciar_sistema
+from src.sistema import iniciar
 
 if __name__ == "__main__":
-    iniciar_sistema()
+    iniciar()

@@ -1,135 +1,111 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import src.utils as utils
 import src.usuario as usuario
+import src.auxiliares as auxiliares
 
-
+# Chama as Funções
 def chamadadefuncoes(escolha, plantacoes, usuarios):
 
-        if escolha in range(5):
-            opcoesdefuncoes = [cadastrar, editar, visualizar, relatorios, apagar]
-            opcoesdefuncoes[escolha](plantacoes)
+    opcoesdefuncoes = [cadastrar, editar, visualizar, relatorios, apagar, apagartudo]
 
-        elif escolha == 5:
-            usuario.apagarusuario(usuarios)
-            usuario.cadastrodeusuario(usuarios)
+    if escolha in range(len(opcoesdefuncoes)):
+        opcoesdefuncoes[escolha](plantacoes)
 
-        else:
-            print("❌ ERRO: Opção inválida!")
-            utils.pausa_pressione()
+    elif escolha == 6:
+        usuario.apagarusuario(usuarios)
+        usuario.cadastrodeusuario(usuarios)
 
-
-def mostrar_sementes(sementes, coluna=3):
-    """
-    Este bloco é uma função de suporte que explica a lógica usada para imprimir sementes
-    em colunas de 3 (editável) para que o usuário escolha corretamente.
-    """
-
-    print("\nEscolha uma das seguintes sementes: \n")
-
-    printar = ""
-
-    for i in range(len(sementes)):
-        item = f"{i}. {sementes[i]}"
-        printar += f"{item:^25} | "
-        if (i + 1) % coluna == 0:
-            print(printar.rstrip(" | "))
-            printar = ""
-
-    if printar:
-        print(printar.rstrip(" | "))
+    else:
+        print("❌ ERRO: Opção inválida!")
+        utils.pausa_pressione()
 
 
+# Funções do Sistema
 def cadastrar(lista):
-
     utils.limpar_tela()
     utils.subtitulo("Cadastro de Plantações")
 
     nome = input("Digite o nome da plantação: ")
 
-    sementes = utils.carregar_dados(utils.SEMENTES)
-    mostrar_sementes(sementes)
-    semente = int(input("\nDigite a semente utilizada: "))
+    tipo_idx, dicionario_plantas = auxiliares.mostrar_plantas()
+    if tipo_idx is None: return
 
-    data_plantio = utils.converter_data(input("Digite a data de plantio (dd/mm/aaaa): "))
-    utils.verificar_data(data_plantio)
+    planta_nome = auxiliares.mostrar_plantas2(tipo_idx, dicionario_plantas)
+    if planta_nome is None: return
 
-    data_colheita = utils.converter_data(input("Digite a data de colheita (dd/mm/aaaa): "))
-    utils.verificar_data(data_colheita)
+    data_plantio = utils.ajustar_data(input("Digite a data de plantio (dd/mm/aaaa): "))
+    if not utils.validar_data(data_plantio): return
 
-    plantacao = {"nome": nome, "semente": sementes[semente], "plantio": data_plantio, "colheita": data_colheita}
+    data_colheita = utils.ajustar_data(input("Digite a data de colheita (dd/mm/aaaa): "))
+    if not utils.validar_data(data_colheita): return
+
+    if utils.comparar_datas(data_colheita, data_plantio, "de colheita", "de plantio"): return
+
+    plantacao = {
+        "nome": nome, 
+        "semente": planta_nome, 
+        "plantio": data_plantio, 
+        "colheita": data_colheita
+    }
 
     lista.append(plantacao)
-
-    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-    utils.subtitulo("Plantação cadastrada com sucesso! ✅") # Subtitulo usado como suporte
+    utils.salvar_dados(lista)
+    utils.subtitulo("Plantação cadastrada com sucesso! ✅")
     utils.pausa_tempo()
 
 
 def editar(lista):
-
-    # Primeira Tela: Mostras as Plantações
     utils.limpar_tela()
     utils.subtitulo("Edição de Plantação")
-
-    utils.validar_lista(lista)
+    if utils.validar_lista(lista): return
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
+    
+    escolha = utils.validar_inteiro(input("\nEscolha a plantação para editar: "), lista)
+    if escolha is None: return
 
-    try:
-        escolha = int(input("\nEscolha a plantação para editar: "))
-        if not (0 <= escolha < len(lista)):
-            print("❌ ERRO: Opção inválida!")
-            utils.pausa_pressione()
-            return
-    except ValueError:
-        print("❌ ERRO: Digite apenas números!")
-        utils.pausa_pressione()
-        return
-
-    # Segunda Tela: Edição da Plantação
+    plantacao = lista[escolha]
     utils.limpar_tela()
     utils.titulo(f"Editando: {plantacao['nome']}")
 
-    plantacao = lista[escolha]
-
-    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"] # Campos que o usuário vê
-    mapa_campos = ["nome", "semente", "plantio", "colheita"] # Campos reais do dicionário
+    campos = ["Nome", "Semente", "Data de Plantio", "Data de Colheita"] # Usuário vê
+    mapa_campos = ["nome", "semente", "plantio", "colheita"] # Python trabalha
 
     for i, campo in enumerate(campos):
         print(f"{i}. {campo}")
 
-    try:
-        campo_escolhido = int(input("\nQual campo deseja editar? "))
-        if campo_escolhido not in range(len(campos)):
-            print("❌ ERRO: Opção inválida!")
-            utils.pausa_pressione()
-            return
-    except ValueError:
-        print("❌ ERRO: Digite apenas números!")
-        utils.pausa_pressione()
-        return
+    campo_escolhido = utils.validar_inteiro(input("\nQual campo deseja editar? "), campos)
+    if campo_escolhido is None: return
+
+    utils.limpar_tela()
 
     if campo_escolhido == 1:
+        tipo_idx, dados_plantas = auxiliares.mostrar_plantas()
+        if tipo_idx is None: return
 
-        sementes = utils.carregar_dados(utils.SEMENTES)
+        novo_valor = auxiliares.mostrar_plantas2(tipo_idx, dados_plantas)
+        if novo_valor is None: return
 
-        mostrar_sementes(sementes)
+    elif campo_escolhido in [2, 3]: # Se for Data (índices 2 ou 3)
+        novo_valor = utils.ajustar_data(input(f"Digite a nova {campos[campo_escolhido]}: "))
+        if not utils.validar_data(novo_valor): return
+        
+        if campo_escolhido == 2: # Editando Plantio
+            if utils.comparar_datas(plantacao['colheita'], novo_valor, "de Colheita", "de Plantio"): return
+        else: # Editando Colheita
+            if utils.comparar_datas(novo_valor, plantacao['plantio'], "de Colheita", "de Plantio"): return
 
-        novo_valor = int(input(f"\nDigite o novo valor para {campos[campo_escolhido]}: "))
-
+    # Se for Nome (índice 0) ou qualquer outro campo de texto
     else:
         novo_valor = input(f"Digite o novo valor para {campos[campo_escolhido]}: ")
 
-    if campo_escolhido in [2, 3]: # Se for data, valida
-        novo_valor = utils.converter_data(novo_valor)
-        utils.verificar_data(novo_valor)
-
+    # Atualiza o dicionário e salva
     chave = mapa_campos[campo_escolhido]
     plantacao[chave] = novo_valor
 
-    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-    utils.subtitulo("Plantação atualizada com sucesso! ✅") # Subtitulo usado como suporte
+    utils.salvar_dados(lista)
+    utils.subtitulo("Plantação atualizada com sucesso! ✅")
     utils.pausa_tempo()
 
 
@@ -137,21 +113,15 @@ def visualizar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Visualização de Plantações")
-    utils.validar_lista(lista)
+    if utils.validar_lista(lista): return
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
 
-    try:
-        escolha = int(input("\nEscolha uma plantação para analisar: "))
-        if 0 <= escolha < len(lista):
-            analisar(lista, escolha)
-        else:
-            print("❌ ERRO: Opção inválida!")
-            utils.pausa_pressione()
-    except ValueError:
-        print("❌ ERRO: Digite apenas números!")
-        utils.pausa_pressione()
+    escolha = utils.validar_inteiro(input("\nEscolha uma plantação para analisar: "), lista)
+    if escolha is None: return
+
+    analisar(lista, escolha)
 
 
 def analisar(lista, indice):
@@ -165,9 +135,10 @@ def analisar(lista, indice):
     print(f"Data de plantio: {plantacao['plantio']}")
     print(f"Data de colheita: {plantacao['colheita']}")
 
-    dias = (datetime.strptime(plantacao['colheita'], "%d/%m/%Y") - datetime.strptime(plantacao['plantio'], "%d/%m/%Y"))
+    dias = utils.dias_para_colheita(plantacao['colheita'])
 
-    print(f"Faltam {dias.days} dias para a colheita!")
+    if dias >= 0: print(f"Faltam {dias} dias para a colheita!")
+    else: print(f"Se passaram {dias * -1} dias da colheita!")
 
     utils.pausa_pressione()
 
@@ -182,12 +153,8 @@ def relatorios(lista):
     for i, opcao in enumerate(opcoes):
         print(f"{i}. {opcao}")
 
-    escolha = int(input("\nDigite uma das opções acima: "))
-
-    if escolha not in range(len(opcoes)):
-        print("\n❌ ERRO: Selecione uma das opções exibidas")
-        utils.pausa_pressione()
-        return
+    escolha = utils.validar_inteiro(input("\nDigite uma das opções acima: "), opcoes)
+    if escolha is None: return
 
     relatorios_2(lista, escolha, opcoes)
 
@@ -199,68 +166,15 @@ def relatorios_2(lista, escolha, opcoes):
 
     #Resumo de Colheita Mensal
     if escolha == 0:
-
-        print(f"Total de platações cadastradas: {len(lista)}")
-        print(f"Colheitas para o mês de {utils.mesatual()}: ")
-        utils.barrinha()
-        
-        for plantacao in lista:
-            plantacao_analisada = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
-            if plantacao_analisada.month == utils.mesatual(False):
-                print(f"\n- {plantacao["nome"]}")
-                print(f"Semente: {plantacao["semente"]}")
-                print(f"Colheita: {plantacao["colheita"]}")
-                print("")
+        auxiliares.resumo_colheita_mensal(lista)
 
     # Status de Colheita
     elif escolha == 1:
-
-        hoje = datetime.today()
-
-        concluidas = []
-        emandamento = []
-        agendadas = []
-
-        for plantacao in lista:
-            datadecolheita = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
-            datadeplantio = datetime.strptime(plantacao["plantio"], "%d/%m/%Y")
-            if hoje >= datadecolheita:
-                concluidas.append(plantacao)
-            elif datadeplantio < hoje < datadecolheita:
-                emandamento.append(plantacao)
-            else:
-                agendadas.append(plantacao)
-        
-        print("")
-        
-        print(f"🟢 Concluídas ({len(concluidas)})")
-        for plantacao in concluidas:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
-
-        print(f"\n🟡 Em andamento ({len(emandamento)})")
-        for plantacao in emandamento:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
-
-        print(f"\n🔵 Agendadas ({len(agendadas)})")
-        for plantacao in agendadas:
-            print(f"- {plantacao["nome"]} | Colheita: {plantacao["colheita"]}")
+        auxiliares.status_colheita(lista)
 
     # Análise de Colheita
     elif escolha == 2:
-
-        print(f"{'| PROXIMAS COLHEITAS (PRÓXIMOS 7 DIAS) |':^{utils.largura_tela}}")
-
-        hoje = datetime.today()
-
-        cont = 0
-        for plantacao in lista:
-            datadecolheita = datetime.strptime(plantacao["colheita"], "%d/%m/%Y")
-            diasatecolheita = (datadecolheita - hoje).days
-            if 0 <= diasatecolheita <= 7:
-                print(f"- {plantacao["nome"]} | {plantacao["semente"]} -> {diasatecolheita} dias")
-                cont += 1
-        
-        if cont == 0: print(f"\n{'NÃO Há COLHEITAS NOS PRÓXIMOS 7 DIAS':^{utils.largura_tela}}")
+        auxiliares.analise_colheita(lista)
 
     utils.pausa_pressione()
 
@@ -269,24 +183,38 @@ def apagar(lista):
 
     utils.limpar_tela()
     utils.subtitulo("Apagar Plantação")
-    utils.validar_lista(lista)
+    if utils.validar_lista(lista): return
 
     for i, plantacao in enumerate(lista):
         print(f"{i}. {plantacao['nome']}")
 
-    try:
-        escolha = int(input("\nEscolha uma plantação para apagar: "))
-        if 0 <= escolha < len(lista):
-            confirmar = input(f"Tem certeza que deseja apagar {lista[escolha]['nome']}? (s/n) ").lower()
-            if confirmar != 's':
-                return
-            lista.pop(escolha)
-            utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
-            utils.subtitulo("Plantação deletada com sucesso! ✅")
-            utils.pausa_tempo()
-        else:
-            print("❌ ERRO: Opção inválida!")
-            utils.pausa_pressione()
-    except ValueError:
-        print("❌ ERRO: Digite apenas números!")
-        utils.pausa_pressione()
+    escolha = utils.validar_inteiro(input("\nEscolha uma plantação para apagar: "), lista)
+    if escolha is None: return
+
+    confirmar = input(f"Tem certeza que deseja apagar {lista[escolha]['nome']}? (s/n) ").lower()
+    if confirmar != 's': return
+
+    lista.pop(escolha)
+
+    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
+    utils.subtitulo("Plantação deletada com sucesso! ✅")
+    utils.pausa_tempo()
+
+
+def apagartudo(lista):
+
+    utils.limpar_tela()
+    utils.subtitulo("Apagar todas as plantaçôes")
+    if utils.validar_lista(lista): return
+
+    confirmar = input(f"TEM CERTEZA QUE DESEJA APAGAR TODAS AS PLANTAÇÕES? (SIM / NÃO)").lower()
+    if confirmar != 'sim': return
+
+    segundaconfirmacao = input(f"\nVOCÊ ESTÁ DELETANDO TODAS AS PLANTAÇÕES! DESEJA CONTINUAR? (SIM / NÃO)").lower()
+    if segundaconfirmacao != 'sim': return
+
+    lista = []
+
+    utils.salvar_dados(lista) # Salva a Plantação em um arquivo JSON
+    utils.subtitulo("Todas as plantaçôes foram deletadas! ⚠️")
+    utils.pausa_tempo()

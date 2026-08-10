@@ -6,9 +6,10 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent
 PLANTACOES = BASE_DIR.parent / "data" / "plantacoes.json"
-SEMENTES = BASE_DIR.parent / "data" / "sementes.json"
+PLANTAS = BASE_DIR.parent / "data" / "plantas.json"
 
 largura_tela = 100
+formato_data = "%d/%m/%Y"
 
 def salvar_dados(lista, arquivo=None):
     if arquivo is None:
@@ -56,7 +57,7 @@ def barrinha():
     print(f"{'-' * largura_tela}")
 
 
-def converter_data(data_str):
+def ajustar_data(data_str):
     if len(data_str) == 8:
         nova_data_str = data_str[:2] + "/" + data_str[2:4] + "/" + data_str[4:]
         return nova_data_str
@@ -66,28 +67,59 @@ def converter_data(data_str):
 
 def validar_data(data_str):
     try:
-        datetime.strptime(data_str, "%d/%m/%Y")
+        datetime.strptime(data_str, formato_data)
         return True
     except ValueError:
-        return False
-
-
-def verificar_data(data_str):
-    if not validar_data(data_str):
         print("❌ ERRO: Data inválida!")
-        utils.pausa_pressione()
-        return
+        pausa_pressione()
+        return False
 
 
 def validar_lista(lista):
     '''
-    Verifica se a lista está vazia
+    Verifica se a lista está VAZIA (True: está | False: não está)
     '''
     if not lista:
         print("⚠️  Nenhuma plantação cadastrada.")
-        utils.pausa_pressione()
-        return
+        pausa_pressione()
+        return True
+    return False
 
+
+def validar_inteiro(valor, lista=None):
+    '''
+    Verifica se é inteiro e se está em um intervalo (range(len(lista))
+    Retorna None caso contrário e o valor caso verdadeiro
+    '''
+    try:
+        valor = int(valor)
+        if lista is not None and valor not in range(len(lista)):
+            print("❌ ERRO: Fora do intervalo")
+            pausa_pressione()
+            return None
+        return valor
+    except ValueError:
+        print("❌ ERRO: Entrada inválida")
+        pausa_pressione()
+        return None
+
+
+def dias_para_colheita(data_de_colheita):
+    diferenca = (datetime.strptime(data_de_colheita, formato_data) - datetime.today()).days
+    return diferenca
+
+
+def comparar_datas(maior, menor, str_maior="maior", str_menor="menor"):
+    '''
+    Recebe duas datas em formato string (maior e menor)
+    Compara levando em consideração quem deve ser maior e menor
+    Retorna caso data maior <= data menor
+    '''
+
+    maior = datetime.strptime(maior, formato_data)
+    menor = datetime.strptime(menor, formato_data)
+
+    if maior <= menor: print(f"❌ A data {str_maior} deve ser posterior a data {str_menor}."); pausa_pressione(); return True
 
 def mesatual(argumento=True):
     '''
