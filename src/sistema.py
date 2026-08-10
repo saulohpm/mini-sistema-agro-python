@@ -3,6 +3,7 @@ import src.utils as utils
 import src.usuario as usuario
 
 def iniciar():
+def iniciar():
     usuarios = usuario.carregar_usuarios()
     usuario.cadastrodeusuario(usuarios)
 
@@ -23,6 +24,7 @@ def menu(plantacoes, usuarios):
             "Relatórios de Plantações",
             "Apagar Plantação",
             "Apagar Todas as Plantações",
+            "Apagar Todas as Plantações",
             "Trocar Nome de Usuário",
             "Sair"
         ]
@@ -37,6 +39,7 @@ def menu(plantacoes, usuarios):
             escolha = int(input("\nSelecione a opção desejada do menu: "))
 
             if escolha == len(opcoes) - 1:
+            if escolha == len(opcoes) - 1:
                 utils.subtitulo(f"{'Programa Encerrado!':^{utils.largura_tela}}")
                 break
 
@@ -44,5 +47,6 @@ def menu(plantacoes, usuarios):
                 chamadadefuncoes(escolha, plantacoes, usuarios)
 
         except ValueError:
+            print("❌ ERRO: Digite uma entrada válida!")
             print("❌ ERRO: Digite uma entrada válida!")
             utils.pausa_pressione()

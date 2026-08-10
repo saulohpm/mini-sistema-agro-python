@@ -1,6 +1,7 @@
 [
     {
         "nome": "Soja Campo Alegre",
+        "nome": "Soja Campo Alegre",
         "semente": "Soja",
         "plantio": "01/09/2025",
         "colheita": "10/01/2026"
@@ -48,6 +49,16 @@
         "colheita": "01/09/2025"
     },
     {
+        "nome": "Plantação Teste",
+        "semente": "Açaí",
+        "plantio": "01/02/2026",
+        "colheita": "28/02/2026"
+    },
+    {
+        "nome": "Magali",
+        "semente": "Melancia",
+        "plantio": "05/03/2026",
+        "colheita": "05/06/2026"
         "nome": "Plantação Teste",
         "semente": "Açaí",
         "plantio": "01/02/2026",
